@@ -16,12 +16,12 @@ import jakarta.validation.constraints.Size;
 @Table(name = "tb_postagens")
 public class Postagem {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id // O atributo é a chave primaria
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto incremente
 	private Long id;
 	
-	@NotBlank(message = "O Atributo título é obrigatório")
-	@Size(min = 5, max = 100, message = "O atributo título deve ter no minimo 05 e no maximo 100 caracteres")
+	@NotBlank(message = "O Atributo título é obrigatório") //notblank impede espaço em branco | ele é exclusivo para String
+	@Size(min = 5, max = 100, message = "O atributo título deve ter no minimo 05 e no maximo 100 caracteres") // size limita o tamanho
 	private String titulo;
 	
 	@NotBlank(message = "O Atributo texto é obrigatório")
