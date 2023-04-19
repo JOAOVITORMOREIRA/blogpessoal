@@ -57,14 +57,18 @@ public class PostagemController {
 	
 	@PostMapping
 	public ResponseEntity<Postagem> post(@Valid @RequestBody Postagem postagem){
-		return ResponseEntity.status(HttpStatus.CREATED).body(postagemRepository.save(postagem));
-		
+		return temaRepository.findById(postagem.getTema().getId())
+				.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(postagemRepository.save(postagem)))
+				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}	
 
 	@PutMapping
 	public ResponseEntity<Postagem>  put(@Valid @RequestBody Postagem postagem){
 		return postagemRepository.findById(postagem.getId())
-			.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(postagemRepository.save(postagem)))
+			.map(resposta -> temaRepository.findById(postagem.getTema().getId())
+					.map(resposta2 -> ResponseEntity.status(HttpStatus.OK).body(postagemRepository.save(postagem)))
+					.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build())
+				)
 			.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 			
 	}	
