@@ -116,18 +116,19 @@ public class UsuarioControllerTest {
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());
 	}
 	
-	/*@Test
-	@DisplayName("Deve fazer o Login de um usuário")
-	public void deveFazerLogin() {
-		
-		usuarioService.cadastrarUsuario(new Usuario(0L, "Vitor", "vitor@email.com", "12345678", "-"));
-		UsuarioLogin usuarioLogin = new UsuarioLogin("vitor@email.com", "12345678", "-");
-		
-		HttpEntity<Optional<UsuarioLogin>> corpoRequisicao = new HttpEntity<Optional<UsuarioLogin>>(Optional.of(usuarioLogin));
+	@Test
+	@DisplayName("Login do Usuário")
+	public void deveAutenticarUsuario() {
+
+		usuarioService.cadastrarUsuario(new Usuario(0L, 
+			"Marisa Souza", "marisa_souza@email.com.br", "13465278", "-"));
+
+		HttpEntity<UsuarioLogin> corpoRequisicao = new HttpEntity<UsuarioLogin>(new UsuarioLogin(0L, 
+			"", "marisa_souza@email.com.br", "13465278", "", ""));
+
 		ResponseEntity<UsuarioLogin> corpoResposta = testRestTemplate
-				.exchange("/usuarios/logar", HttpMethod.POST, corpoRequisicao, UsuarioLogin.class);
-		
+			.exchange("/usuarios/logar", HttpMethod.POST, corpoRequisicao, UsuarioLogin.class);
+
 		assertEquals(HttpStatus.OK, corpoResposta.getStatusCode());
-		
-	}*/
+	}
 }
